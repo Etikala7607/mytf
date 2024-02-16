@@ -1,0 +1,44 @@
+main.tf:
+
+resource "azurerm_application_gateway" "example" {
+  name                = "example-appgateway"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  sku                 = var.sku
+
+  // Define other configurations for Application Gateway
+}
+
+// Define other Azure resources as needed
+
+
+variables.tf:
+
+variable "resource_group_name" {
+  description = "The name of the resource group in which to create the Application Gateway."
+}
+
+variable "location" {
+  description = "The Azure region where the Application Gateway will be deployed."
+}
+
+variable "sku" {
+  description = "The SKU details for the Application Gateway."
+  default     = {
+    name     = "Standard_Small"
+    tier     = "Standard"
+    capacity = 2
+  }
+}
+
+// Define other input variables as needed
+
+
+outputs.tf:
+output "public_ip_address" {
+  description = "The public IP address of the Application Gateway."
+  value       = azurerm_application_gateway.example.frontend_ip_configuration[0].public_ip_address
+}
+
+// Define other output values as needed
+
